@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EssayPro Congo — Rédaction Académique Professionnelle</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cobalt:   #1A237E;
+      --cobalt-d: #0D1257;
+      --amber:    #F59E0B;
+      --amber-l:  #FDE68A;
+      --slate:    #1C1C2E;
+      --cream:    #F8F7F4;
+      --muted:    #6B7280;
+      --white:    #FFFFFF;
+      --green:    #25D366;   /* WhatsApp */
+      --radius:   10px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--cream);
+      color: var(--slate);
+      line-height: 1.6;
+    }
+
+    /* ───── NAV ───── */
+    nav {
+      background: var(--cobalt-d);
+      padding: 0 5%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 12px rgba(0,0,0,.35);
+    }
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.35rem;
+      color: var(--white);
+      letter-spacing: .5px;
+    }
+    .logo span { color: var(--amber); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      color: rgba(255,255,255,.8);
+      text-decoration: none;
+      font-size: .88rem;
+      font-weight: 500;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--amber); }
+    .nav-cta {
+      background: var(--amber);
+      color: var(--slate) !important;
+      padding: .45rem 1.1rem;
+      border-radius: 6px;
+      font-weight: 700 !important;
+    }
+    .hamburger { display: none; cursor: pointer; flex-direction: column; gap: 5px; }
+    .hamburger span { width: 24px; height: 2px; background: var(--white); border-radius: 2px; display: block; }
+
+    /* ───── HERO ───── */
+    .hero {
+      background: linear-gradient(135deg, var(--cobalt-d) 0%, var(--cobalt) 60%, #283593 100%);
+      color: var(--white);
+      padding: 90px 5% 80px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: var(--amber);
+      color: var(--slate);
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: .35rem .85rem;
+      border-radius: 4px;
+      margin-bottom: 1.2rem;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.1rem, 4.5vw, 3.5rem);
+      line-height: 1.15;
+      margin-bottom: 1.2rem;
+    }
+    .hero h1 em { color: var(--amber); font-style: normal; }
+    .hero p {
+      color: rgba(255,255,255,.78);
+      font-size: 1.05rem;
+      margin-bottom: 2rem;
+      max-width: 480px;
+    }
+    .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--amber);
+      color: var(--slate);
+      padding: .85rem 1.9rem;
+      border-radius: var(--radius);
+      font-weight: 700;
+      font-size: .95rem;
+      text-decoration: none;
+      transition: transform .18s, box-shadow .18s;
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(245,158,11,.4); }
+    .btn-outline {
+      border: 2px solid rgba(255,255,255,.5);
+      color: var(--white);
+      padding: .85rem 1.9rem;
+      border-radius: var(--radius);
+      font-weight: 600;
+      font-size: .95rem;
+      text-decoration: none;
+      transition: border-color .18s, background .18s;
+    }
+    .btn-outline:hover { border-color: var(--white); background: rgba(255,255,255,.07); }
+
+    /* hero visual */
+    .hero-visual {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .hero-stat-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .stat-card {
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: var(--radius);
+      padding: 1.2rem 1.4rem;
+      backdrop-filter: blur(6px);
+    }
+    .stat-card .num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      color: var(--amber);
+      line-height: 1;
+    }
+    .stat-card .label { font-size: .78rem; color: rgba(255,255,255,.65); margin-top: .3rem; }
+    .trust-strip {
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: var(--radius);
+      padding: 1rem 1.4rem;
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+    }
+    .trust-icon { font-size: 1.6rem; }
+    .trust-strip p { font-size: .82rem; color: rgba(255,255,255,.7); }
+    .trust-strip strong { color: var(--white); }
+
+    /* ───── SECTION SHARED ───── */
+    section { padding: 80px 5%; }
+    .section-eyebrow {
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: .6rem;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.7rem, 3vw, 2.5rem);
+      color: var(--cobalt-d);
+      margin-bottom: 1rem;
+    }
+    .section-sub { color: var(--muted); max-width: 540px; font-size: .97rem; }
+
+    /* ───── SERVICES ───── */
+    #services { background: var(--white); }
+    .services-header { text-align: center; margin-bottom: 3rem; }
+    .services-header .section-sub { margin: 0 auto; }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+      gap: 1.5rem;
+    }
+    .service-card {
+      border: 1.5px solid #E5E7EB;
+      border-radius: 14px;
+      padding: 2rem 1.7rem;
+      position: relative;
+      background: var(--cream);
+      overflow: hidden;
+      transition: box-shadow .22s, transform .22s;
+    }
+    .service-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(26,35,126,.12); }
+    .service-card.featured { border-color: var(--amber); background: var(--white); }
+    /* diagonal stamp */
+    .stamp {
+      position: absolute;
+      top: 16px; right: -22px;
+      background: var(--amber);
+      color: var(--slate);
+      font-size: .6rem;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: .25rem 2.4rem;
+      transform: rotate(35deg);
+    }
+    .service-card.featured .stamp { background: var(--cobalt); color: var(--white); }
+    .service-icon { font-size: 2.2rem; margin-bottom: 1rem; }
+    .service-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      color: var(--cobalt-d);
+      margin-bottom: .5rem;
+    }
+    .service-card p { font-size: .88rem; color: var(--muted); margin-bottom: 1.2rem; }
+    .service-price {
+      display: flex;
+      align-items: baseline;
+      gap: .35rem;
+      margin-bottom: 1.3rem;
+    }
+    .price-amount {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      color: var(--cobalt);
+      font-weight: 900;
+    }
+    .price-unit { font-size: .78rem; color: var(--muted); font-weight: 500; }
+    .service-features { list-style: none; margin-bottom: 1.5rem; }
+    .service-features li {
+      font-size: .84rem;
+      color: var(--slate);
+      padding: .3rem 0;
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+    }
+    .service-features li::before { content: "✓"; color: var(--amber); font-weight: 800; }
+    .service-features li.no::before { content: "–"; color: #CBD5E1; }
+    .btn-order {
+      display: block;
+      text-align: center;
+      background: var(--cobalt);
+      color: var(--white);
+      padding: .75rem;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: .88rem;
+      text-decoration: none;
+      transition: background .18s;
+    }
+    .service-card.featured .btn-order { background: var(--amber); color: var(--slate); }
+    .btn-order:hover { filter: brightness(1.1); }
+
+    /* ───── HOW IT WORKS ───── */
+    #process { background: var(--cream); }
+    .process-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+      counter-reset: steps;
+    }
+    .step {
+      background: var(--white);
+      border-radius: 14px;
+      padding: 2rem 1.6rem;
+      position: relative;
+      border-left: 4px solid var(--amber);
+      counter-increment: steps;
+    }
+    .step::before {
+      content: counter(steps, decimal-leading-zero);
+      position: absolute;
+      top: 1.2rem; right: 1.4rem;
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      color: rgba(26,35,126,.08);
+      font-weight: 900;
+      line-height: 1;
+    }
+    .step-icon { font-size: 1.8rem; margin-bottom: .8rem; }
+    .step h4 { font-family: 'Playfair Display', serif; font-size: 1.05rem; color: var(--cobalt-d); margin-bottom: .4rem; }
+    .step p { font-size: .85rem; color: var(--muted); }
+
+    /* ───── PAYMENT ───── */
+    #payment { background: var(--cobalt-d); color: var(--white); }
+    .payment-header .section-title { color: var(--white); }
+    .payment-header .section-sub { color: rgba(255,255,255,.65); margin-top: .6rem; }
+    .payment-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+    .payment-card {
+      background: rgba(255,255,255,.07);
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 14px;
+      padding: 1.8rem 1.5rem;
+      text-align: center;
+      transition: background .2s;
+    }
+    .payment-card:hover { background: rgba(255,255,255,.12); }
+    .pay-logo { font-size: 2.6rem; margin-bottom: .9rem; }
+    .payment-card h4 { font-size: 1rem; font-weight: 700; margin-bottom: .4rem; color: var(--amber); }
+    .payment-card p { font-size: .8rem; color: rgba(255,255,255,.6); line-height: 1.5; }
+    .payment-note {
+      margin-top: 2.5rem;
+      background: rgba(245,158,11,.12);
+      border: 1px solid rgba(245,158,11,.3);
+      border-radius: 10px;
+      padding: 1.2rem 1.6rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-size: .88rem;
+      color: rgba(255,255,255,.8);
+    }
+    .payment-note strong { color: var(--amber); }
+    .payment-note .note-icon { font-size: 1.5rem; flex-shrink: 0; }
+
+    /* ───── TESTIMONIALS ───── */
+    #testimonials { background: var(--white); }
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+    .testimonial {
+      border-radius: 14px;
+      border: 1.5px solid #E5E7EB;
+      padding: 1.8rem;
+      position: relative;
+    }
+    .testimonial::before {
+      content: '"';
+      font-family: 'Playfair Display', serif;
+      font-size: 4rem;
+      color: var(--amber);
+      line-height: 1;
+      display: block;
+      margin-bottom: .3rem;
+    }
+    .testimonial p { font-size: .9rem; color: var(--slate); margin-bottom: 1.2rem; font-style: italic; }
+    .testimonial-author { display: flex; align-items: center; gap: .75rem; }
+    .avatar {
+      width: 42px; height: 42px;
+      border-radius: 50%;
+      background: var(--cobalt);
+      color: var(--white);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 1rem;
+    }
+    .author-info strong { display: block; font-size: .88rem; color: var(--cobalt-d); }
+    .author-info span { font-size: .78rem; color: var(--muted); }
+    .stars { color: var(--amber); font-size: .85rem; margin-bottom: .6rem; }
+
+    /* ───── CONTACT ───── */
+    #contact { background: var(--cream); }
+    .contact-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: start;
+      margin-top: 2.5rem;
+    }
+    .contact-info h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      color: var(--cobalt-d);
+      margin-bottom: 1rem;
+    }
+    .contact-info p { font-size: .92rem; color: var(--muted); margin-bottom: 1.5rem; }
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+      margin-bottom: 1rem;
+      font-size: .9rem;
+    }
+    .contact-item .ci-icon { font-size: 1.2rem; }
+    .contact-item a { color: var(--cobalt); font-weight: 600; text-decoration: none; }
+    .contact-form {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 2.2rem;
+      box-shadow: 0 4px 24px rgba(0,0,0,.07);
+    }
+    .contact-form h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      margin-bottom: 1.4rem;
+      color: var(--cobalt-d);
+    }
+    .form-group { margin-bottom: 1.1rem; }
+    label { display: block; font-size: .8rem; font-weight: 600; color: var(--slate); margin-bottom: .4rem; }
+    input, select, textarea {
+      width: 100%;
+      padding: .75rem 1rem;
+      border: 1.5px solid #E5E7EB;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: .9rem;
+      color: var(--slate);
+      background: var(--cream);
+      transition: border-color .18s;
+      outline: none;
+    }
+    input:focus, select:focus, textarea:focus { border-color: var(--cobalt); }
+    textarea { resize: vertical; min-height: 110px; }
+    .btn-whatsapp {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: .65rem;
+      background: var(--green);
+      color: var(--white);
+      padding: .9rem;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: .95rem;
+      width: 100%;
+      border: none;
+      cursor: pointer;
+      transition: background .2s, transform .18s;
+      text-decoration: none;
+    }
+    .btn-whatsapp:hover { background: #1ebe5d; transform: translateY(-2px); }
+    .wa-icon { width: 22px; height: 22px; fill: var(--white); }
+
+    /* ───── FLOATING WA BUTTON ───── */
+    .wa-float {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      width: 60px;
+      height: 60px;
+      background: var(--green);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 6px 24px rgba(37,211,102,.5);
+      z-index: 200;
+      text-decoration: none;
+      transition: transform .2s;
+    }
+    .wa-float:hover { transform: scale(1.12); }
+    .wa-float svg { width: 32px; height: 32px; fill: var(--white); }
+    .wa-tooltip {
+      position: absolute;
+      right: 72px;
+      background: var(--slate);
+      color: var(--white);
+      font-size: .75rem;
+      font-weight: 600;
+      padding: .4rem .85rem;
+      border-radius: 6px;
+      white-space: nowrap;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity .2s;
+    }
+    .wa-float:hover .wa-tooltip { opacity: 1; }
+
+    /* ───── FOOTER ───── */
+    footer {
+      background: var(--cobalt-d);
+      color: rgba(255,255,255,.55);
+      text-align: center;
+      padding: 2rem 5%;
+      font-size: .8rem;
+    }
+    footer a { color: var(--amber); text-decoration: none; }
+    footer strong { color: rgba(255,255,255,.9); }
+
+    /* ───── RESPONSIVE ───── */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .nav-links.open {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 64px; left: 0; right: 0;
+        background: var(--cobalt-d);
+        padding: 1rem 5%;
+        gap: 1rem;
+        box-shadow: 0 8px 20px rgba(0,0,0,.3);
+      }
+      .hero {
+        grid-template-columns: 1fr;
+        padding: 60px 5% 50px;
+        text-align: center;
+      }
+      .hero p { margin-left: auto; margin-right: auto; }
+      .hero-btns { justify-content: center; }
+      .hero-stat-row { grid-template-columns: 1fr 1fr; }
+      .contact-wrapper { grid-template-columns: 1fr; }
+      .payment-note { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">Essay<span>Pro</span> Congo</div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#process">Comment ça marche</a></li>
+    <li><a href="#payment">Paiement</a></li>
+    <li><a href="#contact" class="nav-cta">Commander</a></li>
+  </ul>
+  <div class="hamburger" id="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-text">
+    <span class="hero-badge">Service Académique #1 au Congo</span>
+    <h1>Vos <em>Dissertations A4</em> Rédigées par des Experts</h1>
+    <p>Essais de qualité, livraison rapide, et paiement simple via Mobile Money. Kinshasa, Lubumbashi, partout en RDC.</p>
+    <div class="hero-btns">
+      <a href="#services" class="btn-primary">📄 Voir les Services</a>
+      <a href="https://wa.me/243XXXXXXXXX?text=Bonjour,%20je%20voudrais%20commander%20un%20essay" class="btn-outline" target="_blank">💬 WhatsApp</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-stat-row">
+      <div class="stat-card"><div class="num">500+</div><div class="label">Clients satisfaits</div></div>
+      <div class="stat-card"><div class="num">24h</div><div class="label">Livraison express</div></div>
+      <div class="stat-card"><div class="num">98%</div><div class="label">Taux de réussite</div></div>
+      <div class="stat-card"><div class="num">A4</div><div class="label">Format standard</div></div>
+    </div>
+    <div class="trust-strip">
+      <div class="trust-icon">🔒</div>
+      <p><strong>Paiement sécurisé</strong> via M-Pesa, Orange Money & Airtel Money. Aucune avance requise pour certains services.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="services-header">
+    <p class="section-eyebrow">Nos Offres</p>
+    <h2 class="section-title">Choisissez Votre Formule</h2>
+    <p class="section-sub">Du devoir simple à la dissertation complète, nous couvrons tous vos besoins académiques en format A4.</p>
+  </div>
+  <div class="services-grid">
+
+    <div class="service-card">
+      <div class="stamp">Disponible</div>
+      <div class="service-icon">📝</div>
+      <h3>Essai Standard</h3>
+      <p>Parfait pour les devoirs courants et exposés de 2 à 5 pages A4.</p>
+      <div class="service-price">
+        <span class="price-amount">2.500</span>
+        <span class="price-unit">FC / page A4</span>
+      </div>
+      <ul class="service-features">
+        <li>Introduction, corps & conclusion</li>
+        <li>Sources citées (3–5 refs)</li>
+        <li>Livraison en 48h</li>
+        <li class="no">Révision express</li>
+        <li class="no">Anti-plagiat</li>
+      </ul>
+      <a href="https://wa.me/243XXXXXXXXX?text=Je%20voudrais%20commander%20un%20Essai%20Standard" class="btn-order" target="_blank">Commander</a>
+    </div>
+
+    <div class="service-card featured">
+      <div class="stamp">Populaire</div>
+      <div class="service-icon">🎓</div>
+      <h3>Dissertation Pro</h3>
+      <p>Pour TFC, mémoires et travaux de recherche approfondie de 5 à 20 pages.</p>
+      <div class="service-price">
+        <span class="price-amount">4.000</span>
+        <span class="price-unit">FC / page A4</span>
+      </div>
+      <ul class="service-features">
+        <li>Recherche documentaire incluse</li>
+        <li>Sources citées (8–15 refs)</li>
+        <li>Livraison en 24h express</li>
+        <li>1 révision gratuite</li>
+        <li>Rapport anti-plagiat</li>
+      </ul>
+      <a href="https://wa.me/243XXXXXXXXX?text=Je%20voudrais%20commander%20une%20Dissertation%20Pro" class="btn-order" target="_blank">Commander</a>
+    </div>
+
+    <div class="service-card">
+      <div class="stamp">Disponible</div>
+      <div class="service-icon">⚡</div>
+      <h3>Livraison Urgente</h3>
+      <p>Deadline de moins de 12h ? Nous livrons en 6h pour tous types de travaux.</p>
+      <div class="service-price">
+        <span class="price-amount">7.000</span>
+        <span class="price-unit">FC / page A4</span>
+      </div>
+      <ul class="service-features">
+        <li>Disponible 24h/7j</li>
+        <li>Livraison garantie en 6h</li>
+        <li>Priorité maximale</li>
+        <li>1 révision gratuite</li>
+        <li class="no">Anti-plagiat</li>
+      </ul>
+      <a href="https://wa.me/243XXXXXXXXX?text=J%27ai%20besoin%20d%27une%20Livraison%20Urgente" class="btn-order" target="_blank">Commander</a>
+    </div>
+
+    <div class="service-card">
+      <div class="stamp">Disponible</div>
+      <div class="service-icon">🌍</div>
+      <h3>Traduction + Essai</h3>
+      <p>Essai rédigé en français, anglais ou lingala selon votre besoin.</p>
+      <div class="service-price">
+        <span class="price-amount">5.500</span>
+        <span class="price-unit">FC / page A4</span>
+      </div>
+      <ul class="service-features">
+        <li>Français & Anglais</li>
+        <li>Locuteurs natifs</li>
+        <li>Livraison en 48h</li>
+        <li>1 révision gratuite</li>
+        <li class="no">Anti-plagiat</li>
+      </ul>
+      <a href="https://wa.me/243XXXXXXXXX?text=Je%20voudrais%20une%20traduction%20et%20r%C3%A9daction" class="btn-order" target="_blank">Commander</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process">
+  <p class="section-eyebrow">Comment ça marche</p>
+  <h2 class="section-title">Commander en 4 Étapes Simples</h2>
+  <p class="section-sub">Pas besoin de vous déplacer. Tout se passe sur WhatsApp, depuis votre téléphone.</p>
+  <div class="process-grid">
+    <div class="step">
+      <div class="step-icon">💬</div>
+      <h4>Contactez-nous sur WhatsApp</h4>
+      <p>Envoyez-nous votre sujet, le nombre de pages et la deadline souhaitée.</p>
+    </div>
+    <div class="step">
+      <div class="step-icon">🤝</div>
+      <h4>Recevez un Devis</h4>
+      <p>Nous vous envoyons le prix total et les détails du travail en moins de 15 minutes.</p>
+    </div>
+    <div class="step">
+      <div class="step-icon">📱</div>
+      <h4>Payez via Mobile Money</h4>
+      <p>Réglez 50% d'avance via M-Pesa, Orange Money ou Airtel Money. Le solde à la livraison.</p>
+    </div>
+    <div class="step">
+      <div class="step-icon">📄</div>
+      <h4>Recevez Votre Essai</h4>
+      <p>Votre travail livré en PDF/Word sur WhatsApp, dans le délai convenu. Satisfaction garantie.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PAYMENT -->
+<section id="payment">
+  <div class="payment-header">
+    <p class="section-eyebrow">Options de Paiement</p>
+    <h2 class="section-title">Payez Facilement avec Mobile Money</h2>
+    <p class="section-sub">Nous acceptons les principales solutions de paiement mobile disponibles en RDC.</p>
+  </div>
+  <div class="payment-grid">
+    <div class="payment-card">
+      <div class="pay-logo">📱</div>
+      <h4>M-Pesa</h4>
+      <p>Envoyez le paiement directement sur notre numéro M-Pesa. Transaction confirmée en secondes.</p>
+    </div>
+    <div class="payment-card">
+      <div class="pay-logo">🟠</div>
+      <h4>Orange Money</h4>
+      <p>Transfert Orange Money disponible depuis toutes les provinces. Aucune commission supplémentaire.</p>
+    </div>
+    <div class="payment-card">
+      <div class="pay-logo">🔴</div>
+      <h4>Airtel Money</h4>
+      <p>Paiement Airtel Money accepté. Pratique pour les clients hors réseau M-Pesa et Orange.</p>
+    </div>
+    <div class="payment-card">
+      <div class="pay-logo">💵</div>
+      <h4>Cash USD / FC</h4>
+      <p>Paiement en espèces possible à Kinshasa sur rendez-vous. En Dollars ou Francs Congolais.</p>
+    </div>
+  </div>
+  <div class="payment-note">
+    <div class="note-icon">💡</div>
+    <div><strong>Politique de paiement :</strong> Versement de 50% à la commande, 50% à la livraison. Pour les clients réguliers, paiement intégral après livraison possible. Numéros de paiement communiqués sur WhatsApp.</div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <p class="section-eyebrow">Témoignages</p>
+  <h2 class="section-title">Ce Que Disent Nos Clients</h2>
+  <div class="testimonials-grid">
+    <div class="testimonial">
+      <div class="stars">★★★★★</div>
+      <p>J'ai commandé mon TFC de 15 pages un jeudi soir et reçu le travail le vendredi matin. Qualité impeccable, mes professeurs n'ont rien remarqué. Je recommande vivement !</p>
+      <div class="testimonial-author">
+        <div class="avatar">JM</div>
+        <div class="author-info"><strong>Jean-Marc K.</strong><span>Étudiant en Droit, Kinshasa</span></div>
+      </div>
+    </div>
+    <div class="testimonial">
+      <div class="stars">★★★★★</div>
+      <p>Service très professionnel. Le prix est raisonnable et le paiement via M-Pesa est super pratique. Mon essai était bien structuré avec toutes les références demandées.</p>
+      <div class="testimonial-author">
+        <div class="avatar">AK</div>
+        <div class="author-info"><strong>Aimée K.</strong><span>Étudiante en Médecine, Lubumbashi</span></div>
+      </div>
+    </div>
+    <div class="testimonial">
+      <div class="stars">★★★★☆</div>
+      <p>J'ai demandé une révision et elle a été faite sans problème. L'équipe est réactive sur WhatsApp, ils répondent rapidement même le week-end. Très satisfait.</p>
+      <div class="testimonial-author">
+        <div class="avatar">PC</div>
+        <div class="author-info"><strong>Patrick C.</strong><span>Étudiant en Économie, Goma</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <p class="section-eyebrow">Nous Contacter</p>
+  <h2 class="section-title">Prêt à Commander ?</h2>
+  <div class="contact-wrapper">
+    <div class="contact-info">
+      <h3>Parlons de votre projet</h3>
+      <p>Envoyez-nous un message sur WhatsApp ou remplissez le formulaire. Nous vous répondons en moins de 15 minutes durant nos heures de service.</p>
+      <div class="contact-item">
+        <span class="ci-icon">📱</span>
+        <div>WhatsApp : <a href="https://wa.me/243XXXXXXXXX" target="_blank">+243 XXX XXX XXX</a></div>
+      </div>
+      <div class="contact-item">
+        <span class="ci-icon">📧</span>
+        <div>Email : <a href="mailto:contact@essayprocongo.cd">contact@essayprocongo.cd</a></div>
+      </div>
+      <div class="contact-item">
+        <span class="ci-icon">🕐</span>
+        <div>Disponible : <strong>Lun–Sam, 7h–22h (Kinshasa)</strong></div>
+      </div>
+      <div class="contact-item">
+        <span class="ci-icon">📍</span>
+        <div>Service disponible dans toute la RDC</div>
+      </div>
+    </div>
+    <div class="contact-form">
+      <h3>Envoyer une demande rapide</h3>
+      <div class="form-group">
+        <label>Votre nom</label>
+        <input type="text" id="name" placeholder="Ex: Jean-Pierre Mukendi" />
+      </div>
+      <div class="form-group">
+        <label>Type de service</label>
+        <select id="service">
+          <option value="">Choisir un service...</option>
+          <option>Essai Standard (2.500 FC/page)</option>
+          <option>Dissertation Pro (4.000 FC/page)</option>
+          <option>Livraison Urgente (7.000 FC/page)</option>
+          <option>Traduction + Essai (5.500 FC/page)</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Votre sujet ou description</label>
+        <textarea id="message" placeholder="Décrivez votre sujet, le nombre de pages, la deadline..."></textarea>
+      </div>
+      <a id="waBtn" href="#" class="btn-whatsapp" onclick="sendToWhatsApp(event)">
+        <svg class="wa-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+        </svg>
+        Envoyer via WhatsApp
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p><strong>EssayPro Congo</strong> — Service de rédaction académique professionnel en RDC</p>
+  <p style="margin-top:.5rem;">© 2024 EssayPro Congo · <a href="mailto:contact@essayprocongo.cd">contact@essayprocongo.cd</a> · Kinshasa, République Démocratique du Congo</p>
+</footer>
+
+<!-- FLOATING WHATSAPP BUTTON -->
+<a href="https://wa.me/243XXXXXXXXX?text=Bonjour,%20je%20voudrais%20commander%20un%20essay" class="wa-float" target="_blank" aria-label="Chat WhatsApp">
+  <div class="wa-tooltip">Chattez avec nous !</div>
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+  </svg>
+</a>
+
+<script>
+  function sendToWhatsApp(e) {
+    e.preventDefault();
+    const name    = document.getElementById('name').value.trim();
+    const service = document.getElementById('service').value;
+    const message = document.getElementById('message').value.trim();
+    if (!name || !service || !message) {
+      alert('Veuillez remplir tous les champs avant d\'envoyer.');
+      return;
+    }
+    const text = `Bonjour EssayPro Congo ! 👋\n\n*Nom :* ${name}\n*Service désiré :* ${service}\n*Détails :* ${message}`;
+    window.open(`https://wa.me/243XXXXXXXXX?text=${encodeURIComponent(text)}`, '_blank');
+  }
+</script>
+
+</body>
+</html>
